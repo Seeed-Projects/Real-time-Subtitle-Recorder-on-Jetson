@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聊天界面</title>
+    <style>
+        /* 添加的CSS样式 */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #333;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        #chat-box {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column-reverse; /* 使内容从底部开始 */
+        }
+        .message {
+            background-color: #444;
+            padding: 5px 10px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            font-size: 100px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="chat-box">
+        <!-- 消息将被动态插入到这里 -->
+    </div>
+    <input type="text" id="message-input" placeholder="Enter to send (Shift+Enter for newline)" readonly>
+
+    <script>
+        function fetchMessages() {
+            fetch('/get_messages')
+                .then(response => response.json())
+                .then(data => {
+                    let chatBox = document.getElementById('chat-box');
+                    // 仅当到达底部时才清空和更新消息
+                    const atBottom = chatBox.scrollHeight - chatBox.clientHeight <= chatBox.scrollTop + 1;
+                    chatBox.innerHTML = ''; // 清空当前消息
+                    data.reverse().forEach(msg => { // 反转消息数组，因为我们的flex方向是column-reverse
+                        let messageElement = document.createElement('div');
+                        messageElement.classList.add('message');
+                        messageElement.textContent = msg;
+                        chatBox.appendChild(messageElement);
+                    });
+                    // 如果用户已经在底部，添加新消息后滚动到底部
+                    if (atBottom) {
+                        chatBox.scrollTop = chatBox.scrollHeight;
+                    }
+                })
+                .catch(error => console.error('Error fetching messages:', error));
+        }
+
+        // 设置定时器每秒钟获取一次消息
+        setInterval(fetchMessages, 100);
+    </script>
+</body>
+</html>
