@@ -1,5 +1,5 @@
 # Speech Subtitle Generation on Jetson
-
+..
 In this project, we use the [Riva ASR Server](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/riva/resources/riva_quickstart) to capture data from the microphone input in real-time and display it on a webpage.
 
 ## Requirement
@@ -12,7 +12,9 @@ In this project, we use the [Riva ASR Server](https://catalog.ngc.nvidia.com/org
 
 ## Prepare the runtime environment
 
-Use the following command to install the runtime environment:
+**1.** Please refer to [this wiki](https://wiki.seeedstudio.com/Local_Voice_Chatbot/#install-riva-server) for installing Riva ASR Server.
+
+**2.** Use the following command to install the runtime environment:
 
 ```shell
 # flask
@@ -29,13 +31,13 @@ python3 -c 'import riva.client; print(riva.client.__version__)'
 sudo apt-get install -y --no-install-recommends python3-pyaudio
 ```
 
-## Let's run it
+## Let's run it！
 
 ```shell
-git clone ...
-cd ...
+git clone https://github.com/Seeed-Projects/Real-time-Subtitle-Recorder-on-Jetson.git
+cd Real-time-Subtitle-Recorder-on-Jetson
 python3 recorder.py
 ```
 
 ## Run results
-(coming soon)
+- https://youtu.be/XypO6BlXkCY?si=AuWyfqLKr5eYL_ez
